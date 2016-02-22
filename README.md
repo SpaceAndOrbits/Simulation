@@ -1,5 +1,1 @@
-# Simulation
-We are creating a simulation of our solarsystem
-let's go simulate
-
-Testing
+Make changes in the "Test" branch first and then apply it to the main branch
