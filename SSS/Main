@@ -2,10 +2,15 @@
 // Computer science project RUC spring 2016
 Body[] bodieSystem;                                                //Create array for bodies
 float G = 6.67408e-11;                                             //Gravitational constant (m^3 * kg * s^-2)
+static int z = -240;
+static int xi = 500;
+static int yi = 500;
 
 void setup() {
-  size(1350,1000);                                                 //Size of the window
-  frameRate(10000);                                                //Framerate of the simulation
+  size(800,600,P3D); //Size of the window
+  surface.setResizable(true);
+  //frameRate(10);                                                //Framerate of the simulation
+  lights();
   int x0 = width/2;                                                //Width calculations
   int y0 = height/2;                                               //Hight calculations
   
@@ -56,7 +61,7 @@ void setup() {
   
     //These calculate the size of the planets. nothing important here
   double sizeA = massA/6.43739332E23; float FsizeA = (float)sizeA;
-  double sizeB = massB/6.43739332E24; float FsizeB = (float)sizeB;
+  double sizeB = massB/3.43739332E22; float FsizeB = (float)sizeB;
   double sizeC = massC/6.43739332E28; float FsizeC = (float)sizeC;
   double sizeD = massD/6.43739332E22; float FsizeD = (float)sizeD;
   double sizeE = massE/6.43739332E22; float FsizeE = (float)sizeE;
@@ -91,12 +96,20 @@ void setup() {
   bodieSystem[9] = bodyJ;                                          //NEPTUNE
 }
   
-void draw() {                                                      //Draw function calls itself over and over
- // background(0);                                                 //Background, omit to see tails of bodies
+void draw() {                                                    //Draw function calls itself over and over
+  background(0,0,50,5);                                                 //Background, omit to see tails of bodies
+  if (keyPressed == true && key == '4') xi+=10;
+  if (keyPressed == true && key == '6') xi-=10;
+  if (keyPressed == true && key == '8') yi+=10;
+  if (keyPressed == true && key == '2') yi-=10;
+  if (keyPressed == true && key == 'b') background(0);
+  if (keyPressed == true && key == '+') z+=10;
+  if (keyPressed == true && key == '-') z-=10;
+  
   for (int i = 0; i < bodieSystem.length; i++){                    //For loop that goes throughh all bodies
      bodieSystem[i].updateLocation();                              //Update location for all bodies
      bodieSystem[i].drawBody();                                    //Draw all bodies in the window
   }
-  //println(frameRate);
+  println(frameRate);
   //println(bodieSystem[2].location.toPVector().z);
 }

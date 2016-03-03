@@ -5,6 +5,7 @@ class Body {
   double mass;                                          //Mass (double) of body
   color c;                                              //Color of body
   float size;                                           //Size of the body (Not to scale)
+  int animationSpeed = 100000;
  
   Body(PVectorD location, PVectorD speed,       //Constructor for any body
   double mass, color c,  float size) {          //"this" here refers to the current body object
@@ -15,46 +16,52 @@ class Body {
     this.size = size; 
   }
   
-  float scaler = 1;
-  
   void drawBody() {
+    float scale = 20000;                        //Used for scaling the universe
     
-  translate(width/2,height/2);
-  scale(scaler);
-  translate(-width/2,-height/2);
-  if (keyPressed == true && key == 'a') {scaler -=0.01;background(125,125,125);}
-  if (keyPressed == true && key == 's') {scaler +=0.01;background(125,125,125);}
-  if (keyPressed == true && key == 'd') {scaler =1;background(125,125,125);}
-  
-    float scale = 80000;                        //Used for scaling the universe
-    strokeWeight(0.3);                          //This defines the size of the outline of the ellipses                         //////////////////////////////////////////////////////////////////
-    fill(c);                                    //Decides the color                                                            //Here the location of the Moon is calculated.                  //
-    if(c == color(0, 255, 0)){                  //Checks if the color matches that of the Moon object                          //We do this by adding the location of the Moon and substracting//
-      float x = location.toPVector().x/scale + (location.toPVector().x - bodieSystem[0].location.toPVector().x)*40/500000000;  //the location of the Earth, then multiplying by a factor to see//
-      float y = location.toPVector().y/scale + (location.toPVector().y - bodieSystem[0].location.toPVector().y)*40/500000000;  //in order to see the change in our window.                     //
-      x= x/scale;                                                                                                              //////////////////////////////////////////////////////////////////
-      y= y/scale;
-      ellipse(x + width/2, y + height/2, size, size);
+    strokeWeight(0.5);//This defines the size of the outline of the ellipses                                               //////////////////////////////////////////////////////////////////
+    fill(c);                                    //Decides the color                                                        //Here the location of the Moon is calculated.                  //
+    if(c == color(0, 255, 0)){                  //Checks if the color matches that of the Moon object                      //We do this by adding the location of the Moon and substracting//
+      float x = location.toPVector().x/scale + (location.toPVector().x - bodieSystem[0].location.toPVector().x)*40/scale;  //the location of the Earth, then multiplying by a factor to see//
+      float y = location.toPVector().y/scale + (location.toPVector().y - bodieSystem[0].location.toPVector().y)*40/scale;  //in order to see the change in our window.                     //
+      x= 1.618 * x/scale;                                                                                                  //////////////////////////////////////////////////////////////////
+      y= 0.618 * y/scale;
+      pushMatrix();
+      stroke(color(255,255,255,128));
+      //fill (c);// add depth
+      translate(x + xi, y +yi, z);
+      sphere(size);
+    popMatrix();    
+      
+      //ellipse(x + 500, y + 500, size, size);
     }
     else {
-      float x = location.toPVector().x/scale; //The toPevector method takes a PVectorD and returns a PVector.
-      float y = location.toPVector().y/scale; //We need to divide by alot here to make sure we can see the objects.
-      x= x/scale;
-      y= y/scale;
-      ellipse(x + width/2, y + height/2, size, size);      //This simply draws an ellipse at location.
+      float x = location.toPVector().x/scale;       //The toPevector method takes a PVectorD and returns a PVector.
+      float y = location.toPVector().y/scale;       //We need to divide by alot here to make sure we can see the objects.
+      //x= x/scale;
+      //y= y/scale;
+      x= 1.618 * x/scale;
+      y= 0.618 * y/scale;
+      pushMatrix();
+      stroke(color(255,255,255,128));
+      //fill (c);// add depth
+      translate(x + xi, y + yi, z);
+      sphere(size);
+    popMatrix();    
+      //ellipse(x + 500, y + 500, size, size);      //This simply draws an ellipse at location.
     }
   }
   
   public void updateLocation() {
     updateMySpeed();                              //Updates speed before speed is inserted    
-    for (int i = 0; i<1000;i++) {                 //This for loop can be run more times to speed up the program. Just remember that it comes at the cost of precision.
+    for (int i = 0; i<animationSpeed;i++) {                 //This for loop can be run more times to speed up the program. Just remember that it comes at the cost of precision.
       location.add(speed);                        //This adds the speed PVectorD to the location PVectorD
     }
    }
    
   private void updateMySpeed() {
     updateMyAccelleration();                      //Updates acceleration before acceleration is inserted  
-for (int i = 0; i<1000;i++) {                     //Just like the above. Just remember that both have to have the same iteration number.
+for (int i = 0; i<animationSpeed;i++) {                     //Just like the above. Just remember that both have to have the same iteration number.
     speed.add(accelleration);
 }
    }
