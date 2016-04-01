@@ -5,6 +5,8 @@ float G = 6.67408e-11;                                             //Gravitation
 static int z = -240;
 static int xi = 500;
 static int yi = 500;
+static int time = 0;
+static int animationSpeed = 100000;
 
 void setup() {
   size(800,600,P3D); //Size of the window
@@ -98,10 +100,10 @@ void setup() {
   
 void draw() {                                                    //Draw function calls itself over and over
   background(0,0,50,5);                                                 //Background, omit to see tails of bodies
-  if (keyPressed == true && key == '4') xi+=10;
-  if (keyPressed == true && key == '6') xi-=10;
-  if (keyPressed == true && key == '8') yi+=10;
-  if (keyPressed == true && key == '2') yi-=10;
+  if (keyPressed == true && key == 'A') xi+=10;
+  if (keyPressed == true && key == 'D') xi-=10;
+  if (keyPressed == true && key == 'W') yi+=10;
+  if (keyPressed == true && key == 'S') yi-=10;
   if (keyPressed == true && key == 'b') background(0);
   if (keyPressed == true && key == '+') z+=10;
   if (keyPressed == true && key == '-') z-=10;
@@ -110,6 +112,8 @@ void draw() {                                                    //Draw function
      bodieSystem[i].updateLocation();                              //Update location for all bodies
      bodieSystem[i].drawBody();                                    //Draw all bodies in the window
   }
-  println(frameRate);
+  time = time + 1 + animationSpeed;
+  println(time/31556926);                                          //shows eath years
+  // println(frameRate);
   //println(bodieSystem[2].location.toPVector().z);
 }
