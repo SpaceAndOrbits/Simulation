@@ -124,4 +124,4 @@ void draw() {                                                    //Draw function
   //println(bodieSystem[2].location.toPVector().z);
 }
 int testet = 0; //Needs to change name of variable and possibly change to boolean
-int year = 0;
+int year = 0; //Also needs to be moved to body class for obvious reasons
