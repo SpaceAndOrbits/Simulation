@@ -4,7 +4,7 @@ class Body {
   PVectorD accelleration;                               //Acceleration doubles vector
   double mass;                                          //Mass (double) of body
   color c;                                              //Color of body
-  float size;                                           //Size of the body (Not to scale)
+  float size;                                           //Size of the body (Not to scale)//
   int animationSpeed = 100000;
  
   Body(PVectorD location, PVectorD speed,       //Constructor for any body
