@@ -110,6 +110,18 @@ void draw() {                                                    //Draw function
      bodieSystem[i].updateLocation();                              //Update location for all bodies
      bodieSystem[i].drawBody();                                    //Draw all bodies in the window
   }
-  println(frameRate);
+  println("Framerate: "+frameRate);
+  println("Earth Position:" + bodieSystem[0].location);
+  if (bodieSystem[0].location.y < 0 && testet == 0) {
+    testet = 2;
+  }
+  if (bodieSystem[0].location.y > 0 && testet == 2) {
+    year++;
+    testet = 0;
+  }
+    
+  println("Year: " + year);
   //println(bodieSystem[2].location.toPVector().z);
 }
+int testet = 0; //Needs to change name of variable and possibly change to boolean
+int year = 0;
