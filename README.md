@@ -1,3 +1,3 @@
-I am looking into creating a factory class!
+creating time steps, so that we know how long time has passed in the simulation
 
 
