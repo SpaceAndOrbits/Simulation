@@ -5,7 +5,6 @@ class Body {
   double mass;                                          //Mass (double) of body
   color c;                                              //Color of body
   float size;                                           //Size of the body (Not to scale)
-  int animationSpeed = 100000;
  
   Body(PVectorD location, PVectorD speed,       //Constructor for any body
   double mass, color c,  float size) {          //"this" here refers to the current body object
@@ -54,14 +53,14 @@ class Body {
   
   public void updateLocation() {
     updateMySpeed();                              //Updates speed before speed is inserted    
-    for (int i = 0; i<animationSpeed;i++) {                 //This for loop can be run more times to speed up the program. Just remember that it comes at the cost of precision.
+    for (int i = 0; i<calculationSpeed;i++) {                 //This for loop can be run more times to speed up the program. Just remember that it comes at the cost of precision.
       location.add(speed);                        //This adds the speed PVectorD to the location PVectorD
     }
    }
    
   private void updateMySpeed() {
     updateMyAccelleration();                      //Updates acceleration before acceleration is inserted  
-for (int i = 0; i<animationSpeed;i++) {                     //Just like the above. Just remember that both have to have the same iteration number.
+for (int i = 0; i<calculationSpeed;i++) {                     //Just like the above. Just remember that both have to have the same iteration number.
     speed.add(accelleration);
 }
    }
