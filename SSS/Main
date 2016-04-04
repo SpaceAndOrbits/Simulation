@@ -96,19 +96,16 @@ void setup() {
   bodieSystem[9] = bodyJ;                                          //NEPTUNE
 }
   
+  animationSpeed = 200;
 void draw() {                                                    //Draw function calls itself over and over
   background(0,0,50,5);                                                 //Background, omit to see tails of bodies
-  if (keyPressed == true && key == '4') xi+=10;
-  if (keyPressed == true && key == '6') xi-=10;
-  if (keyPressed == true && key == '8') yi+=10;
-  if (keyPressed == true && key == '2') yi-=10;
-  if (keyPressed == true && key == 'b') background(0);
-  if (keyPressed == true && key == '+') z+=10;
-  if (keyPressed == true && key == '-') z-=10;
+  Move();
   
-  for (int i = 0; i < bodieSystem.length; i++){                    //For loop that goes throughh all bodies
-     bodieSystem[i].updateLocation();                              //Update location for all bodies
-     bodieSystem[i].drawBody();                                    //Draw all bodies in the window
+  for (int i = 0; i < animationSpeed; i++) {
+    for (int j = 0; j < bodieSystem.length; j++){                    //For loop that goes throughh all bodies
+       bodieSystem[j].updateLocation();                              //Update location for all bodies
+      bodieSystem[j].drawBody();                                    //Draw all bodies in the window
+    }
   }
   println("Framerate: "+frameRate);
   println("Earth Position:" + bodieSystem[0].location);
@@ -124,4 +121,20 @@ void draw() {                                                    //Draw function
   //println(bodieSystem[2].location.toPVector().z);
 }
 int testet = 0; //Needs to change name of variable and possibly change to boolean
-int year = 0;
+int year = 0; //Also needs to be moved to body class for obvious reasons
+
+void Move() {
+  if (keyPressed == true && key == '4') xi+=10;
+  if (keyPressed == true && key == '6') xi-=10;
+  if (keyPressed == true && key == '8') yi+=10;
+  if (keyPressed == true && key == '2') yi-=10;
+  if (keyPressed == true && key == 'b') background(0);
+  if (keyPressed == true && key == '+') z+=10;
+  if (keyPressed == true && key == '-') z-=10;
+  if (keyPressed == true && key == '*') {
+    animationSpeed += 50;
+  }
+  if (keyPressed == true && key == '/' && animationSpeed > 0) {
+    animationSpeed -= 50;
+  }
+ }
