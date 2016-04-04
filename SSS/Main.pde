@@ -5,7 +5,7 @@ float G = 6.67408e-11;                                             //Gravitation
 static int z = -240;
 static int xi = 500;
 static int yi = 500;
-static int calculationSpeed = 100000;
+static int calculationSpeed = 100;
 int animationSpeed = 200;
 int year = 0;
 
@@ -104,31 +104,24 @@ void draw() {                                                    //Draw function
   Move();
   
   for (int i = 0; i < animationSpeed; i++) {
+  time = time + 1 + calculationSpeed;
     for (int j = 0; j < bodieSystem.length; j++){                    //For loop that goes throughh all bodies
        bodieSystem[j].updateLocation();                              //Update location for all bodies
-      bodieSystem[j].drawBody();                                    //Draw all bodies in the window
     }
   }
+  for (int i = 0; i < animationSpeed; i++) {
+  bodieSystem[i].drawBody();                                    //Draw all bodies in the window
+  }
+
   println("Framerate: "+frameRate);
-  println("Earth Position:" + bodieSystem[0].location);
-  if (bodieSystem[0].location.y < 0 && testet == 0) {
-    testet = 2;
-  }
-  if (bodieSystem[0].location.y > 0 && testet == 2) {
-    year++;
-    testet = 0;
-  }
-  time = time + 1 + calculationSpeed;
+
   if(time > 31556926) {
   time = time - 31556926;
   year++;
   }
-  println("we have simulated for" + year + "years(by time)");    
-  println("Year: " + year);
+  println("we have simulated for " + year + " years(by time)");    
   //println(bodieSystem[2].location.toPVector().z);
 }
-int testet = 0; //Needs to change name of variable and possibly change to boolean
-int year = 0; //Also needs to be moved to body class for obvious reasons
 
 void Move() {
   if (keyPressed == true && key == '4') xi+=10;
