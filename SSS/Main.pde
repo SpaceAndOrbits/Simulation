@@ -6,6 +6,7 @@ static int z = -240;
 static int xi = 500;
 static int yi = 500;
 static int calculationSpeed = 100000;
+int animationSpeed = 200;
 int year = 0;
 
 void setup() {
@@ -97,8 +98,7 @@ void setup() {
   bodieSystem[8] = bodyI;                                          //URANUS
   bodieSystem[9] = bodyJ;                                          //NEPTUNE
 }
-  
-  animationSpeed = 200;
+
 void draw() {                                                    //Draw function calls itself over and over
   background(0,0,50,5);                                                 //Background, omit to see tails of bodies
   Move();
