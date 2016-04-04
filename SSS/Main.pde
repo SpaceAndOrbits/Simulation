@@ -8,6 +8,7 @@ static int yi = 500;
 static int calculationSpeed = 100;
 int animationSpeed = 200;
 int year = 0;
+int time = 0;
 
 void setup() {
   size(800,600,P3D); //Size of the window
@@ -109,7 +110,7 @@ void draw() {                                                    //Draw function
        bodieSystem[j].updateLocation();                              //Update location for all bodies
     }
   }
-  for (int i = 0; i < animationSpeed; i++) {
+  for (int i = 0; i < bodieSystem.length; i++) {
   bodieSystem[i].drawBody();                                    //Draw all bodies in the window
   }
 
