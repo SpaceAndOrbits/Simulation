@@ -5,6 +5,8 @@ float G = 6.67408e-11;                                             //Gravitation
 static int z = -240;
 static int xi = 500;
 static int yi = 500;
+static int calculationSpeed = 100000;
+int year = 0;
 
 void setup() {
   size(800,600,P3D); //Size of the window
@@ -14,27 +16,27 @@ void setup() {
   int x0 = width/2;                                                //Width calculations
   int y0 = height/2;                                               //Hight calculations
   
-  PVectorD locationA = new PVectorD(x0 + 149598023e3, y0);         // Initial location: Earth (m)
-  PVectorD locationB = new PVectorD(x0 + 149598023e3+384780e3,y0); // initial location: Moon (m)
+  PVectorD locationA = new PVectorD(x0   -2.521092863852298E10, y0 +1.449279195712076E11, 0);         // Initial location: Earth (m)
+  PVectorD locationB = new PVectorD(x0 -2.552857888050620E10, y0 +1.446860363961675E11); // initial location: Moon (m)
   PVectorD locationC = new PVectorD(x0, y0);                       // initial location: Sun (m)
-  PVectorD locationD = new PVectorD(x0 + 227920000e3, y0);         // initial location: Mars (m)
-  PVectorD locationE = new PVectorD(x0 + 57909050e3, y0);          // initial location: Mercury (m)
-  PVectorD locationF = new PVectorD(x0 + 108208000e3, y0);         // initial location: Venus (m)
-  PVectorD locationG = new PVectorD(x0 + 778570000e3, y0);         // initial location: Jupiter (m)
-  PVectorD locationH = new PVectorD(x0 + 1433530000e3, y0);        // initial location: Saturn (m)
-  PVectorD locationI = new PVectorD(x0 + 2872460000e3, y0);        // initial location: Uranus (m)
-  PVectorD locationJ = new PVectorD(x0 + 4495060000e3, y0);        // initial location: Neptune (m)
-  
-  PVectorD speedA = new PVectorD(0, 29780);                       // Earth speed (m/s)
-  PVectorD speedB = new PVectorD(0, 1022+29780);                  // Moon speed (m/s)
+  PVectorD locationD = new PVectorD(x0 + 2.079950549908331e11, y0 - 3.143009561106971e9, 0);         // initial location: Mars (m)
+  PVectorD locationE = new PVectorD(x0 -2.105262111032039E10, y0 - 6.640663808353403E10);          // initial location: Mercury (m)
+  PVectorD locationF = new PVectorD(x0 - 1.075055502695123E11, y0 - 3.366520720591562E9);         // initial location: Venus (m)
+  PVectorD locationG = new PVectorD(x0 + 5.989091594973032E11, y0 + 4.391225931530510E11);         // initial location: Jupiter (m)
+  PVectorD locationH = new PVectorD(x0 + 9.587063368200246E11, y0 + 9.825652109121954E11);        // initial location: Saturn (m)
+  PVectorD locationI = new PVectorD(x0 +2.158774703477132E12, y0 - 2.054825231595053E12);        // initial location: Uranus (m)
+  PVectorD locationJ = new PVectorD(x0 + 2.514853420151505E12, y0 - 3.738847412364252E12);        // initial location: Neptune (m)
+
+  PVectorD speedA = new PVectorD(-2.983983333368269E4, -5.207633918704476E3);                       // Earth speed (m/s)
+  PVectorD speedB = new PVectorD(-2.927904627038706E4, -6.007566180814270E3);                  // Moon speed (m/s)
   PVectorD speedC = new PVectorD(0, 0);                           // Sun Speed (m/s)
-  PVectorD speedD = new PVectorD(0,24077);                        // Mars speed (m/s)
-  PVectorD speedE = new PVectorD(0,47362);                        // Mercury speed (m/s)
-  PVectorD speedF = new PVectorD(0,35020);                        // Venus speed (m/s)
-  PVectorD speedG = new PVectorD(0,13070);                        // Jupiter speed (m/s)
-  PVectorD speedH = new PVectorD(0,9690);                         // Saturn speed (m/s)
-  PVectorD speedI = new PVectorD(0,6800);                         // Uranus speed (m/s)
-  PVectorD speedJ = new PVectorD(0,5430);                         // Neptune speed (m/s)
+  PVectorD speedD = new PVectorD(1.295003532851602E3, 2.629442067068712E4);                        // Mars speed (m/s)
+  PVectorD speedE = new PVectorD(3.665298706393840E4, -1.228983810111077E4);                        // Mercury speed (m/s)
+  PVectorD speedF = new PVectorD(8.891598046362434E2, -3.515920774124290E4);                        // Venus speed (m/s)
+  PVectorD speedG = new PVectorD( -7.901937610713569E3, 1.116317695450082E4);                        // Jupiter speed (m/s)
+  PVectorD speedH = new PVectorD(-7.428885683466339E3, 6.738814237717373E3);                         // Saturn speed (m/s)
+  PVectorD speedI = new PVectorD(4.637648411798584E3, 4.627192877193528E3);                         // Uranus speed (m/s)
+  PVectorD speedJ = new PVectorD(4.465799984073191E3, 3.075681163952201E3);                         // Neptune speed (m/s)
   
   double massA = 5.97219e24;                                       // Earth mass (kg)
   double massB = 7.34767309e22;                                    // Moon mass (kg)
@@ -116,7 +118,12 @@ void draw() {                                                    //Draw function
     year++;
     testet = 0;
   }
-    
+  time = time + 1 + calculationSpeed;
+  if(time > 31556926) {
+  time = time - 31556926;
+  year++;
+  }
+  println("we have simulated for" + year + "years(by time)");    
   println("Year: " + year);
   //println(bodieSystem[2].location.toPVector().z);
 }
