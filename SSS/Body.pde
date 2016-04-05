@@ -66,7 +66,7 @@ for (int i = 0; i<calculationSpeed;i++) {                     //Just like the ab
    }
 
   private void updateMyAccelleration() {
-    accelleration = new PVectorD(0,0);                                         //Acceleration is reset
+    accelleration = new PVectorD(0,0,0);                                         //Acceleration is reset
     for (int i = 0; i < bodieSystem.length; i++) {                             //Check all bodies for their contribution
       if(bodieSystem[i] != this){                                              //...Unless its oneself
         accelleration.add(bodieSystem[i].contributionToAccelerationOf(this));  //Now add to acceleration the output from the method below
@@ -78,7 +78,7 @@ for (int i = 0; i<calculationSpeed;i++) {                     //Just like the ab
     PVector contribution = PVector.sub(location.toPVector(), otherBody.location.toPVector()); //Substract locations of the two bodies to find the distance between them
     float r = contribution.mag();                                                            //Calculate magnitude of vector (This is why we are using PVectors for this. Can be changed later
     contribution.normalize();                                                               //Makes contribution unitary. Ie it gets the length (magnitude) 1.
-    PVectorD tempContribution = new PVectorD(0, 0);                                        //Now we make a PVectorD so we can handle the big values below
+    PVectorD tempContribution = new PVectorD(0, 0, 0);                                        //Now we make a PVectorD so we can handle the big values below
     tempContribution.set(contribution);                                                   //And makes it the same as contribution
     double force = (G * mass * otherBody.mass)/(r * r);                                  //Then calculate the force the other body excerts on the body using Newton's law of universal gravitation
     tempContribution.mult(force/otherBody.mass);                                        //Then multiply the contribution by F/m_2 (which comes from f=ma <=> a=f/m)
