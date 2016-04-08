@@ -1,6 +1,7 @@
 // Simulation of gravitational effect v.3.d (Now with ALL THE COMMENTS!)
 // Computer science project RUC spring 2016
-Body[] bodieSystem;                                                //Create array for bodies
+
+ArrayList<Body> bodieSystem = new ArrayList<Body>();
 float G = 6.67408e-11;                                             //Gravitational constant (m^3 * kg * s^-2)
 static int z = -240;
 static int xi = 500;
@@ -19,8 +20,8 @@ void setup() {
   int y0 = height/2;                                               //Hight calculations
   
   PVectorD locationA = new PVectorD(x0   -2.521092863852298E+10, y0 +1.449279195712076E+11, -6.164888475164771E+05);         // Initial location: Earth (m)
-  PVectorD locationB = new PVectorD(x0 -2.552857888050620E+10, y0 +1.446860363961675E+11, 3.593933517466486E+07); // initial location: Moon (m)
-  PVectorD locationC = new PVectorD(x0, y0);                       // initial location: Sun (m)
+  PVectorD locationB = new PVectorD(x0 -2.552857888050620E+10, y0 +1.446860363961675E+11, 3.593933517466486E+07);           // initial location: Moon (m)
+  PVectorD locationC = new PVectorD(x0, y0);                                                                               // initial location: Sun (m)
   PVectorD locationD = new PVectorD(x0 + 2.079950549908331E+11, y0 - 3.143009561106971E+09, -5.178781160069674E+09);         // initial location: Mars (m)
   PVectorD locationE = new PVectorD(x0 -2.105262111032039E+10, y0 - 6.640663808353403E+10, -3.492446023382954E+09);          // initial location: Mercury (m)
   PVectorD locationF = new PVectorD(x0 - 1.075055502695123E+11, y0 - 3.366520720591562E+09, 6.159219802771119E+09);         // initial location: Venus (m)
@@ -31,7 +32,7 @@ void setup() {
 
   PVectorD speedA = new PVectorD(-2.983983333368269E+04, -5.207633918704476E+03, 6.169062303484907E-02);                       // Earth speed (m/s)
   PVectorD speedB = new PVectorD(-2.927904627038706E+04, -6.007566180814270E+03, -1.577640655646029E-00);                  // Moon speed (m/s)
-  PVectorD speedC = new PVectorD(0, 0);                           // Sun Speed (m/s)
+  PVectorD speedC = new PVectorD(0, 0);                                                                                   // Sun Speed (m/s)
   PVectorD speedD = new PVectorD(1.295003532851602E+03, 2.629442067068712E+04, 5.190097267545717E+02);                        // Mars speed (m/s)
   PVectorD speedE = new PVectorD(3.665298706393840E+04, -1.228983810111077E+04, -4.368172898981951E+03);                        // Mercury speed (m/s)
   PVectorD speedF = new PVectorD(8.891598046362434E+02, -3.515920774124290E+04, -5.318594054684045E+02);                        // Venus speed (m/s)
@@ -87,18 +88,16 @@ void setup() {
   Body bodyI = new Body(locationI, speedI, massI, colorI, FsizeI);     //Values for Uranus -> constructor
   Body bodyJ = new Body(locationJ, speedJ, massJ, colorJ, FsizeJ);     //Values for Neptune -> constructor
   
-  bodieSystem = new Body[10];                                       //Initialize array for bodies
-  
-  bodieSystem[0] = bodyA;                                          //Puts Earth in array
-  bodieSystem[1] = bodyB;                                          //Puts Moon in an array
-  bodieSystem[2] = bodyC;                                          //Puts Sun in an array
-  bodieSystem[3] = bodyD;                                          //MARS
-  bodieSystem[4] = bodyE;                                          //MURCURY
-  bodieSystem[5] = bodyF;                                          //VENUS
-  bodieSystem[6] = bodyG;                                          //JUPITER
-  bodieSystem[7] = bodyH;                                          //SATURN
-  bodieSystem[8] = bodyI;                                          //URANUS
-  bodieSystem[9] = bodyJ;                                          //NEPTUNE
+  bodieSystem.add(bodyA);                                          //Puts Earth in array
+  bodieSystem.add(bodyB);                                          //Puts Moon in an array
+  bodieSystem.add(bodyC);                                          //Puts Sun in an array
+  bodieSystem.add(bodyD);                                          //MARS
+  bodieSystem.add(bodyE);                                          //MURCURY
+  bodieSystem.add(bodyF);                                          //VENUS
+  bodieSystem.add(bodyG);                                          //JUPITER
+  bodieSystem.add(bodyH);                                          //SATURN
+  bodieSystem.add(bodyI);                                          //URANUS
+  bodieSystem.add(bodyJ);                                          //NEPTUNE
 }
 
 void draw() {                                                    //Draw function calls itself over and over
@@ -107,12 +106,12 @@ void draw() {                                                    //Draw function
   
   for (int i = 0; i < animationSpeed; i++) {
   time = time + 1 + calculationSpeed;
-    for (int j = 0; j < bodieSystem.length; j++){                    //For loop that goes throughh all bodies
-       bodieSystem[j].updateLocation();                              //Update location for all bodies
+    for (int j = 0; j < bodieSystem.size(); j++){                    //For loop that goes throughh all bodies
+       bodieSystem.get(j).updateLocation();                              //Update location for all bodies
     }
   }
-  for (int i = 0; i < bodieSystem.length; i++) {
-  bodieSystem[i].drawBody();                                    //Draw all bodies in the window
+  for (int i = 0; i < bodieSystem.size(); i++) {
+  bodieSystem.get(i).drawBody();                                    //Draw all bodies in the window
   }
 
   println("Framerate: "+frameRate);
@@ -133,10 +132,6 @@ void Move() {
   if (keyPressed == true && key == 'b') background(0);
   if (keyPressed == true && key == '+') z+=10;
   if (keyPressed == true && key == '-') z-=10;
-  if (keyPressed == true && key == '*') {
-    animationSpeed += 50;
-  }
-  if (keyPressed == true && key == '/' && animationSpeed > 0) {
-    animationSpeed -= 50;
-  }
+  if (keyPressed == true && key == '*') animationSpeed += 50;
+  if (keyPressed == true && key == '/' && animationSpeed > 0) animationSpeed -= 50;
  }
