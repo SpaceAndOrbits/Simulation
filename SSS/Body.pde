@@ -18,11 +18,11 @@ class Body {
   void drawBody() {
     float scale = 20000;                        //Used for scaling the universe
     
-    strokeWeight(0.5);//This defines the size of the outline of the ellipses                                               //////////////////////////////////////////////////////////////////
+    strokeWeight(0.5);                        //This defines the size of the outline of the ellipses                       //////////////////////////////////////////////////////////////////
     fill(c);                                    //Decides the color                                                        //Here the location of the Moon is calculated.                  //
     if(c == color(0, 255, 0)){                  //Checks if the color matches that of the Moon object                      //We do this by adding the location of the Moon and substracting//
-      float x = location.toPVector().x/scale + (location.toPVector().x - bodieSystem[0].location.toPVector().x)*40/scale;  //the location of the Earth, then multiplying by a factor to see//
-      float y = location.toPVector().y/scale + (location.toPVector().y - bodieSystem[0].location.toPVector().y)*40/scale;  //in order to see the change in our window.                     //
+      float x = location.toPVector().x/scale + (location.toPVector().x - bodieSystem.get(0).location.toPVector().x)*40/scale;  //the location of the Earth, then multiplying by a factor to see//
+      float y = location.toPVector().y/scale + (location.toPVector().y - bodieSystem.get(0).location.toPVector().y)*40/scale;  //in order to see the change in our window.                     //
       x= 1.618 * x/scale;                                                                                                  //////////////////////////////////////////////////////////////////
       y= 0.618 * y/scale;
       pushMatrix();
@@ -67,9 +67,9 @@ for (int i = 0; i<calculationSpeed;i++) {                     //Just like the ab
 
   private void updateMyAccelleration() {
     accelleration = new PVectorD(0,0,0);                                         //Acceleration is reset
-    for (int i = 0; i < bodieSystem.length; i++) {                             //Check all bodies for their contribution
-      if(bodieSystem[i] != this){                                              //...Unless its oneself
-        accelleration.add(bodieSystem[i].contributionToAccelerationOf(this));  //Now add to acceleration the output from the method below
+    for (int i = 0; i < bodieSystem.size(); i++) {                             //Check all bodies for their contribution
+      if(bodieSystem.get(i) != this){                                              //...Unless its oneself
+        accelleration.add(bodieSystem.get(i).contributionToAccelerationOf(this));  //Now add to acceleration the output from the method below
       }
     }  
   }
