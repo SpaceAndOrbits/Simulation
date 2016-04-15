@@ -115,10 +115,10 @@ void draw() {                                                    //Draw function
   Move();
   
   for (int i = 0; i < animationSpeed; i++) {
-  yearTime = yearTime + 1 + calculationSpeed;
-  monthTime = monthTime + 1 + calculationSpeed;
-  dayTime = dayTime + 1 + calculationSpeed;
-  hourTime = hourTime + 1 + calculationSpeed;
+  yearTime = yearTime  + calculationSpeed;
+  monthTime = monthTime  + calculationSpeed;
+  dayTime = dayTime  + calculationSpeed;
+  hourTime = hourTime + calculationSpeed;
     for (int j = 0; j < bodieSystem.size(); j++){                    //For loop that goes throughh all bodies
        bodieSystem.get(j).updateLocation();                              //Update location for all bodies
     }
