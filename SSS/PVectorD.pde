@@ -104,27 +104,27 @@ class PVectorD {
   void add(PVector a) {
     x = x+a.x;
     y = y+a.y;
-    //z = z+a.z;
+    z = z+a.z;
   }
     void sub(PVector a) {
     x = x-a.x;
     y = y-a.y;
-    //z = z-a.z;
+    z = z-a.z;
   }
     void mult(PVector a) {
     x = x*a.x;
     y = y*a.y;
-    //z = z*a.z;
+    z = z*a.z;
   }
     void mult(double a) {
       x = x*a;
       y = y*a;
-      //z = z*a
+      z = z*a;
     }
       void add(PVectorD a) {
     x = x+a.x;
     y = y+a.y;
-    //z = z+a.z;
+    z = z+a.z;
   }
   //-------------------------------------
   
