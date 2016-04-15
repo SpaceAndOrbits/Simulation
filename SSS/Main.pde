@@ -6,28 +6,20 @@ float G = 6.67408e-11;                                             //Gravitation
 static int z = -240;
 static int xi = 500;
 static int yi = 500;
-static int calculationSpeed = 100;
-int animationSpeed = 200;
+static int calculationSpeed = 5;
+int animationSpeed = 2000;
 int year = 0;
-float yearTime = 0;
-float monthTime = 0;
-float dayTime = 0;
-float hourTime = 0;
-int month = 1;
-int day = 0;
-int hour = 0;
-
-PFont f;
+int time = 0;
+PrintWriter output;
 
 void setup() {
+  output = createWriter("positions.txt");
   size(800,600,P3D); //Size of the window
   surface.setResizable(true);
   //frameRate(10);                                                //Framerate of the simulation
   lights();
-  int x0 = width/2;                                                //Width calculations
-  int y0 = height/2;                                               //Hight calculations
-  
-  f = createFont("Arial", 16, true);
+  int x0 = 0;                                                //Width calculations
+  int y0 = 0;                                               //Hight calculations
   
   PVectorD locationA = new PVectorD(x0   -2.521092863852298E+10, y0 +1.449279195712076E+11, -6.164888475164771E+05);         // Initial location: Earth (m)
   PVectorD locationB = new PVectorD(x0 -2.552857888050620E+10, y0 +1.446860363961675E+11, 3.593933517466486E+07);           // initial location: Moon (m)
@@ -115,12 +107,9 @@ void draw() {                                                    //Draw function
   Move();
   
   for (int i = 0; i < animationSpeed; i++) {
-  yearTime = yearTime  + calculationSpeed;
-  monthTime = monthTime  + calculationSpeed;
-  dayTime = dayTime  + calculationSpeed;
-  hourTime = hourTime + calculationSpeed;
+  time = time + calculationSpeed;
     for (int j = 0; j < bodieSystem.size(); j++){                    //For loop that goes throughh all bodies
-       bodieSystem.get(j).updateLocation();                              //Update location for all bodies
+       if (j != 2) bodieSystem.get(j).updateLocation();                              //Update location for all bodies
     }
   }
   for (int i = 0; i < bodieSystem.size(); i++) {
@@ -128,54 +117,49 @@ void draw() {                                                    //Draw function
   }
 
   println("Framerate: "+frameRate);
-
-  if(yearTime > 31556926) {
-  yearTime = yearTime - 31556926;
+  evalEccentricity();
+  if(time > 31556926) {
+  time = time - 31556926;
   year++;
-  } 
+  output.println("Locations after " + year + " year." + " at time " + time + " -31556926");
+  output.println("");
+  for (int i = 0; i < bodieSystem.size(); i++) {
+  output.println(bodieSystem.get(i).location.toPVector());
+  }
+  output.println("");
+  }
+  println("we have simulated for " + year + " years(by time)");    
   //println(bodieSystem[2].location.toPVector().z);
-  if(monthTime > 31556926/12){
-   monthTime = monthTime - 31556926/12;
-   month++;
-  }
-  
-  if(dayTime > 86457.3315){
-   dayTime = dayTime - 86457.3315;
-   day++;
-  }
-  
-  if(hourTime > 3602.38881){
-   hourTime = hourTime - 3602.38881;
-   hour++;
-  }
-  if(month > 12){
-    month = month - 12;
-  }
-  if(hour > 24){
-    hour = hour - 24;
-  }
-  /*println("we have simulated for " + hour + " hour(by time)");
-  println("we have simulated for " + year + " years(by time)");
-  println("we have simulated for " + month + " months(by time)");
-  println("we have simulated for " + day + " days(by time)");*/
-  
-  textFont(f,16);
-  fill(255,255,255);
-  text(year + " years " + month + " months " + day + " days " + hour + " hours", 20, 20);
 }
 
 void Move() {
+  if (keyPressed == true && key == 'o') {
+    output.flush(); // Writes the remaining data to the file
+  output.close(); // Finishes the file
+  exit(); // Stops the program
+  }
   if (keyPressed == true && key == '4') xi+=10;
   if (keyPressed == true && key == '6') xi-=10;
   if (keyPressed == true && key == '8') yi+=10;
   if (keyPressed == true && key == '2') yi-=10;
-  /*if (keyPressed == true && keyCode == LEFT) xi+=10;
-  if (keyPressed == true && keyCode == RIGHT) xi-=10;
-  if (keyPressed == true && keyCode == UP) yi+=10;
-  if (keyPressed == true && keyCode == DOWN) yi-=10;*/
   if (keyPressed == true && key == 'b') background(0);
   if (keyPressed == true && key == '+') z+=10;
   if (keyPressed == true && key == '-') z-=10;
   if (keyPressed == true && key == '*') animationSpeed += 50;
   if (keyPressed == true && key == '/' && animationSpeed > 0) animationSpeed -= 50;
  }
+ 
+ float initialRadius = 57909050; //(km)
+ float apoapsisRadius = initialRadius;
+ float periapsisRadius = initialRadius;
+ 
+ void evalEccentricity(){
+  float testX = (bodieSystem.get(4).location.toPVector().x/1000);
+  float testY = (bodieSystem.get(4).location.toPVector().y/1000);
+  float testRadius = dist(bodieSystem.get(2).location.toPVector().x, bodieSystem.get(2).location.toPVector().y, testX, testY); 
+  if (testRadius < periapsisRadius){periapsisRadius = testRadius;}
+  if (testRadius > apoapsisRadius){apoapsisRadius = testRadius;}
+  float eccentricity = (apoapsisRadius - periapsisRadius) / (apoapsisRadius + periapsisRadius);
+  println("testRadius " + testRadius);
+  println("Eccentricity: " + eccentricity);
+  }
